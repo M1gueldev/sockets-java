@@ -1,0 +1,36 @@
+.test1 {
+    --var-a: #fbf1c7;
+    --var-b: #fbf0c7;
+    --var-c: #fbf1c7;
+    --var-d: #fbf1c7;
+    --var-e: #fbf1c7; }
+.test1 {
+    --var-a: #3c3835;
+    --var-b: #2c3835;
+    --var-c: #3c3835;
+    --var-d: #3c3835;
+    --var-e: #3c3835; }
+.test1 {
+    --var-a: #32302f;
+    --var-b: #32301f;
+    --var-c: #32302f;
+    --var-d: #32302f;
+    --var-e: #32302f; }
+.test1 {
+    --var-a: #9d0006;
+    --var-b: #8d0006;
+    --var-c: #9d0006;
+    --var-d: #9d0006;
+    --var-e: #9d0006; }
+.test1 {
+    --var-a: #32302f;
+    --var-b: #32301f;
+    --var-c: #32302f;
+    --var-d: #32302f;
+    --var-e: #32302f; }
+.test1 {
+    --var-a: #3c3835;
+    --var-b: #2c3835;
+    --var-c: #32302f;
+    --var-d: #32302f;
+    --var-e: #32302f; }

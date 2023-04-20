@@ -1,6 +1,10 @@
 import java.io.*;
 import java.net.ServerSocket;
 import java.net.Socket;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.regex.Pattern;
 
 public class TCPServer {
 
@@ -12,6 +16,8 @@ public class TCPServer {
     private BufferedReader entrada = null;
     private PrintWriter salida = null;
 
+    private final Pattern DATE_REGEX = Pattern.compile("[0-9]{1,2}/[0-9]{1,2}/[0-9]{4}");
+    private final Pattern PLACA = Pattern.compile("[0-9]{4}-[A-Z]{3}");
     public TCPServer() {
         try {
             socketServidor = new ServerSocket(PORT);
@@ -39,11 +45,63 @@ public class TCPServer {
                 String str = entrada.readLine();
                 System.out.println("Cliente: " + str);
                 salida.println("Cliente: "+ socketCliente);
-                salida.println(str);
+                if (!PLACA.matcher(str).find()) {
+                    salida.println("Placa invalida");
+                } else if (!DATE_REGEX.matcher(str).find()) {
+                    salida.println("Fecha invalida");
+                } else {
+
+                    //String date = DATE_REGEX.matcher(str).group(1);
+                    String date = str.substring(0, 11);
+                    // String placa = PLACA.matcher(str).group();
+                    String placa = str.substring(11);
+                    System.out.println("Fecha: " + date);
+                    System.out.println("Placa: " + placa);
+                    int fecha = new SimpleDateFormat("dd/MM/yyyy").parse(date).getDay();
+                    placa = placa.replaceAll("[A-Z]", "").replaceAll("-","");
+                    boolean aux = true;
+                    String last = placa.substring(placa.length() - 1);
+                    System.out.println(fecha + " " + placa + " " + date + ";;" +  new SimpleDateFormat("dd/MM/yyyy").parse(date).toString());
+                    if (fecha == 1){
+                        if (last == "1" || last == "2"){
+                            salida.println("Tiene Restriccion");
+                            aux = false;
+                        }
+                    }
+                    if (fecha == 2){
+                        if (last.equals("3") || last.equals("4")){
+                            salida.println("Tiene Restriccion");
+                            aux = false;
+                        }
+                    }
+                    if (fecha == 3){
+                        if (last.equals("5") || last.equals("6")){
+                            salida.println("Tiene Restriccion");
+                            aux = false;
+                        }
+                    }
+                    if (fecha == 4){
+                        if (last.equals("7") || last.equals("8")){
+                            salida.println("Tiene Restriccion");
+                            aux = false;
+                        }
+                    }
+                    if (fecha == 5){
+                        if (last.equals("9") || last.equals("0")){
+                            salida.println("Tiene Restriccion");
+                            aux = false;
+                        }
+                    }
+
+                    if (aux) {
+                        salida.println("NO Tiene Restriccion");
+                    }
+
+                }
                 if (str.equals("exit")) break;
             }
 
-        } catch (IOException e) {
+        } catch (IOException | ParseException e) {
             System.out.println("IOException: " + e.getMessage());
         }
 
